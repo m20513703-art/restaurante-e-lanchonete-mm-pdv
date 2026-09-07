@@ -1,0 +1,441 @@
+/* =====================================================
+   PDV - RESTAURANTE LANCHONETE MM
+   ===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f3f6;
+    color: #222;
+}
+
+/* =========================
+   CABEÇALHO
+   ========================= */
+
+header {
+    background: #111827;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    font-size: 28px;
+    margin-bottom: 6px;
+}
+
+header p {
+    color: #d1d5db;
+    font-size: 14px;
+}
+
+/* =========================
+   CONTAINER PRINCIPAL
+   ========================= */
+
+.pdv-container {
+    width: 95%;
+    max-width: 1400px;
+    margin: 25px auto;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 20px;
+}
+
+/* =========================
+   CARDS / SEÇÕES
+   ========================= */
+
+.pdv-section {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.pdv-section h2 {
+    margin-bottom: 15px;
+    color: #111827;
+    font-size: 21px;
+}
+
+/* =========================
+   BUSCA
+   ========================= */
+
+#buscaPDV {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+#buscaPDV:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+/* =========================
+   CATEGORIAS
+   ========================= */
+
+.categorias-pdv {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.categorias-pdv button,
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.categorias-pdv button {
+    background: #e5e7eb;
+    color: #111827;
+}
+
+.categorias-pdv button:hover {
+    background: #d1d5db;
+    transform: translateY(-1px);
+}
+
+/* =========================
+   PRODUTOS
+   ========================= */
+
+#resultadoProdutosPDV {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.produto-pdv {
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 15px;
+    background: #fff;
+    transition: 0.2s;
+}
+
+.produto-pdv:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.produto-pdv h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.produto-pdv p {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.produto-pdv .preco {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* =========================
+   BOTÃO ADICIONAR
+   ========================= */
+
+.btn-adicionar {
+    width: 100%;
+    background: #16a34a;
+    color: white;
+}
+
+.btn-adicionar:hover {
+    background: #15803d;
+}
+
+/* =========================
+   PRODUTO ESGOTADO
+   ========================= */
+
+.produto-esgotado {
+    opacity: 0.65;
+    background: #f9fafb;
+}
+
+.produto-esgotado::after {
+    content: "🔴 ESGOTADO";
+    display: block;
+    color: #dc2626;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.btn-esgotado {
+    width: 100%;
+    background: #dc2626;
+    color: white;
+    cursor: not-allowed;
+}
+
+/* =========================
+   PEDIDO / CARRINHO
+   ========================= */
+
+#pedidoPDV {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.item-pedido-pdv {
+    border-bottom: 1px solid #e5e7eb;
+    padding: 12px 0;
+}
+
+.item-pedido-pdv:last-child {
+    border-bottom: none;
+}
+
+.item-pedido-pdv h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.item-pedido-pdv p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* =========================
+   CONTROLES DE QUANTIDADE
+   ========================= */
+
+.controles-pdv {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.controles-pdv button {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: #e5e7eb;
+}
+
+.controles-pdv button:hover {
+    background: #d1d5db;
+}
+
+.quantidade-pdv {
+    min-width: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* =========================
+   TOTAL
+   ========================= */
+
+#totalPDV {
+    display: block;
+    font-size: 27px;
+    color: #16a34a;
+    margin: 15px 0;
+}
+
+/* =========================
+   CAMPOS
+   ========================= */
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-bottom: 12px;
+    outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #2563eb;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+/* =========================
+   BOTÃO FINALIZAR
+   ========================= */
+
+.btn-finalizar {
+    width: 100%;
+    background: #2563eb;
+    color: white;
+    padding: 14px;
+    font-size: 17px;
+}
+
+.btn-finalizar:hover {
+    background: #1d4ed8;
+}
+
+/* =========================
+   BOTÃO LIMPAR
+   ========================= */
+
+.btn-limpar {
+    width: 100%;
+    background: #6b7280;
+    color: white;
+    padding: 12px;
+    margin-top: 8px;
+}
+
+.btn-limpar:hover {
+    background: #4b5563;
+}
+
+/* =========================
+   PAGAMENTO
+   ========================= */
+
+.pagamento-pdv {
+    margin-top: 20px;
+}
+
+#areaTrocoPDV {
+    background: #f3f4f6;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+#trocoPDV {
+    color: #16a34a;
+    font-size: 20px;
+}
+
+/* =========================
+   BOTÃO VOLTAR
+   ========================= */
+
+.btn-voltar {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background: #111827;
+    color: white;
+    padding: 13px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.btn-voltar:hover {
+    background: #374151;
+}
+
+/* =========================
+   MENSAGENS
+   ========================= */
+
+.mensagem-vazia {
+    text-align: center;
+    color: #777;
+    padding: 25px;
+}
+
+.mensagem-sucesso {
+    background: #dcfce7;
+    color: #166534;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.mensagem-erro {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* =========================
+   ROLAGEM
+   ========================= */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #9ca3af;
+    border-radius: 10px;
+}
+
+/* =========================
+   CELULAR
+   ========================= */
+
+@media (max-width: 900px) {
+
+    .pdv-container {
+        grid-template-columns: 1fr;
+        width: 96%;
+    }
+
+    #resultadoProdutosPDV {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+
+    header h1 {
+        font-size: 22px;
+    }
+
+    .pdv-section {
+        padding: 15px;
+    }
+
+    #resultadoProdutosPDV {
+        grid-template-columns: 1fr;
+    }
+
+    .categorias-pdv button {
+        flex: 1 1 45%;
+    }
+}
