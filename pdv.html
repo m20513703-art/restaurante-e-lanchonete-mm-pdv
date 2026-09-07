@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PDV Administrativo - Restaurante Lanchonete MM</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="cabecalho">
+    <h1>🧾 PDV Administrativo</h1>
+    <p>Restaurante Lanchonete MM</p>
+</header>
+
+
+<main class="pdv-container">
+
+    <!-- =========================================
+         PRODUTOS
+    ========================================== -->
+
+    <section class="pdv-card">
+
+        <h2>🛒 Montar Pedido</h2>
+
+        <input
+            type="text"
+            id="buscaPDV"
+            placeholder="🔎 Buscar produto..."
+            autocomplete="off"
+        >
+
+        <div class="pdv-categorias">
+
+            <button onclick="filtrarPDV('Todos')">
+                📋 Todos
+            </button>
+
+            <button onclick="filtrarPDV('Lanches')">
+                🍔 Lanches
+            </button>
+
+            <button onclick="filtrarPDV('Hot Dog')">
+                🌭 Hot Dog
+            </button>
+
+            <button onclick="filtrarPDV('Pizza')">
+                🍕 Pizza
+            </button>
+
+            <button onclick="filtrarPDV('Esfirras')">
+                🥟 Esfirras
+            </button>
+
+            <button onclick="filtrarPDV('Porções')">
+                🍟 Porções
+            </button>
+
+            <button onclick="filtrarPDV('Bebidas')">
+                🥤 Bebidas
+            </button>
+
+            <button onclick="filtrarPDV('Marmitas')">
+                🍱 Marmitas
+            </button>
+
+            <button onclick="filtrarPDV('À La Carte')">
+                🍽️ À La Carte
+            </button>
+
+        </div>
+
+
+        <div id="resultadoProdutosPDV">
+
+            <p class="pdvAviso">
+                Carregando produtos...
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         PEDIDO ATUAL
+    ========================================== -->
+
+    <section class="pdv-card">
+
+        <h2>📋 Pedido Atual</h2>
+
+
+        <div id="pedidoPDV">
+
+            <p class="pdvAviso">
+                Nenhum produto adicionado.
+            </p>
+
+        </div>
+
+
+        <div class="pdv-total">
+
+            <span>TOTAL</span>
+
+            <strong id="totalPDV">
+                R$ 0,00
+            </strong>
+
+        </div>
+
+
+        <button
+            class="botaoPrincipal"
+            onclick="finalizarPDV()"
+        >
+            ✅ FINALIZAR PEDIDO
+        </button>
+
+
+        <button
+            class="botaoSecundario"
+            onclick="limparPDV()"
+        >
+            🗑️ LIMPAR PEDIDO
+        </button>
+
+    </section>
+
+
+
+    <!-- =========================================
+         DADOS DO CLIENTE
+    ========================================== -->
+
+    <section class="pdv-card">
+
+        <h2>👤 Dados do Cliente</h2>
+
+
+        <input
+            type="text"
+            id="clientePDV"
+            placeholder="Nome do cliente"
+        >
+
+
+        <input
+            type="tel"
+            id="telefonePDV"
+            placeholder="Telefone"
+        >
+
+
+        <select id="tipoPedidoPDV">
+
+            <option value="">
+                Tipo do pedido
+            </option>
+
+            <option value="Retirada">
+                🏪 Retirada
+            </option>
+
+            <option value="Entrega">
+                🛵 Entrega
+            </option>
+
+        </select>
+
+
+        <input
+            type="text"
+            id="enderecoPDV"
+            placeholder="Endereço para entrega"
+        >
+
+    </section>
+
+
+
+    <!-- =========================================
+         PAGAMENTO
+    ========================================== -->
+
+    <section class="pdv-card">
+
+        <h2>💰 Pagamento</h2>
+
+
+        <select id="pagamentoPDV">
+
+            <option value="">
+                Forma de pagamento
+            </option>
+
+            <option value="Dinheiro">
+                💵 Dinheiro
+            </option>
+
+            <option value="Pix">
+                📱 Pix
+            </option>
+
+            <option value="Cartão de Débito">
+                💳 Cartão de Débito
+            </option>
+
+            <option value="Cartão de Crédito">
+                💳 Cartão de Crédito
+            </option>
+
+        </select>
+
+
+        <input
+            type="number"
+            id="valorPagoPDV"
+            placeholder="Valor recebido"
+            step="0.01"
+        >
+
+
+        <div class="pdv-troco">
+
+            <span>Troco:</span>
+
+            <strong id="trocoPDV">
+                R$ 0,00
+            </strong>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         FINALIZAÇÃO
+    ========================================== -->
+
+    <section class="pdv-card pdv-finalizacao">
+
+        <h2>✅ Finalizar Venda</h2>
+
+
+        <button
+            class="botaoPrincipal"
+            onclick="finalizarVendaPDV()"
+        >
+            🧾 FINALIZAR VENDA
+        </button>
+
+
+        <button
+            class="botaoSecundario"
+            onclick="window.location.href='index.html'"
+        >
+            🏠 VOLTAR PARA O SITE
+        </button>
+
+    </section>
+
+</main>
+
+
+<script src="pdv.js"></script>
+
+</body>
+
+</html>
