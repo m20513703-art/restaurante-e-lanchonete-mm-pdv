@@ -1,6 +1,6 @@
 // =====================================================
 // PDV - RESTAURANTE LANCHONETE MM
-// CONTROLE DE PRODUTOS + ESTOQUE
+// CONTROLE DE PRODUTOS + ESTOQUE + VENDAS
 // =====================================================
 
 let pedidoPDV = [];
@@ -13,7 +13,10 @@ let categoriaSelecionada = "Todos";
 
 const produtosPDV = [
 
+    // =========================
     // LANCHES
+    // =========================
+
     { nome: "X-Burguer", categoria: "Lanches", preco: 20 },
     { nome: "X-Salada", categoria: "Lanches", preco: 22 },
     { nome: "X-Bacon", categoria: "Lanches", preco: 26 },
@@ -32,14 +35,22 @@ const produtosPDV = [
     { nome: "Hambúrguer Extra", categoria: "Lanches", preco: 8 },
     { nome: "Catupiry Extra", categoria: "Lanches", preco: 5 },
 
+
+    // =========================
     // HOT DOG
+    // =========================
+
     { nome: "Dog Simples", categoria: "Hot Dog", preco: 14 },
     { nome: "Dog Duplo", categoria: "Hot Dog", preco: 18 },
     { nome: "Dog Frango", categoria: "Hot Dog", preco: 20 },
     { nome: "Dog Bacon", categoria: "Hot Dog", preco: 22 },
     { nome: "Dog Tudo", categoria: "Hot Dog", preco: 26 },
 
+
+    // =========================
     // ESFIRRAS
+    // =========================
+
     { nome: "Esfirra de Carne", categoria: "Esfirras", preco: 8 },
     { nome: "Esfirra de Frango", categoria: "Esfirras", preco: 8.5 },
     { nome: "Esfirra de Queijo", categoria: "Esfirras", preco: 9 },
@@ -51,7 +62,11 @@ const produtosPDV = [
     { nome: "Esfirra Quatro Queijos", categoria: "Esfirras", preco: 11.5 },
     { nome: "Esfirra Especial da Casa", categoria: "Esfirras", preco: 12 },
 
+
+    // =========================
     // PORÇÕES
+    // =========================
+
     { nome: "Batata Frita Tradicional 500g", categoria: "Porções", preco: 28 },
     { nome: "Batata com Cheddar e Bacon 600g", categoria: "Porções", preco: 38 },
     { nome: "Calabresa Acebolada 500g", categoria: "Porções", preco: 35 },
@@ -59,7 +74,11 @@ const produtosPDV = [
     { nome: "Isca de Tilápia 500g", categoria: "Porções", preco: 48 },
     { nome: "Contrafilé Acebolado 500g", categoria: "Porções", preco: 55 },
 
+
+    // =========================
     // BEBIDAS
+    // =========================
+
     { nome: "Coca-Cola Lata", categoria: "Bebidas", preco: 6.5 },
     { nome: "Coca-Cola Zero Lata", categoria: "Bebidas", preco: 6.5 },
     { nome: "Guaraná Lata", categoria: "Bebidas", preco: 6.5 },
@@ -71,13 +90,21 @@ const produtosPDV = [
     { nome: "Água sem gás", categoria: "Bebidas", preco: 4 },
     { nome: "Água com gás", categoria: "Bebidas", preco: 4.5 },
 
+
+    // =========================
     // MARMITAS
+    // =========================
+
     { nome: "Marmita Pequena", categoria: "Marmitas", preco: 20 },
     { nome: "Marmita Média", categoria: "Marmitas", preco: 25 },
     { nome: "Marmita Grande", categoria: "Marmitas", preco: 28 },
     { nome: "Marmita Comercial", categoria: "Marmitas", preco: 50 },
 
+
+    // =========================
     // À LA CARTE
+    // =========================
+
     { nome: "À Parmegiana - Frango", categoria: "À La Carte", preco: 38 },
     { nome: "À Parmegiana - Carne", categoria: "À La Carte", preco: 44 },
     { nome: "À Parmegiana - Peixe", categoria: "À La Carte", preco: 46 },
@@ -114,6 +141,9 @@ const produtosPDV = [
 // =====================================================
 
 const saboresPizza = [
+
+    // SALGADAS
+
     { nome: "Atum", preco: 52 },
     { nome: "Bacon", preco: 50 },
     { nome: "Baiana", preco: 52 },
@@ -135,6 +165,8 @@ const saboresPizza = [
     { nome: "Tilápia", preco: 58 },
     { nome: "Vegetariana", preco: 52 },
 
+    // DOCES
+
     { nome: "Banana com Canela", preco: 45 },
     { nome: "Beijinho", preco: 48 },
     { nome: "Brigadeiro", preco: 45 },
@@ -147,11 +179,13 @@ const saboresPizza = [
     { nome: "Sensação", preco: 52 }
 ];
 
+
 const tamanhosPizza = [
     { nome: "Pequena", pedacos: 4, sabores: 1 },
     { nome: "Média", pedacos: 8, sabores: 2 },
     { nome: "Grande", pedacos: 12, sabores: 3 }
 ];
+
 
 const bordasPizza = [
     { nome: "Sem Borda", preco: 0 },
@@ -166,6 +200,7 @@ const bordasPizza = [
     { nome: "Doce de Leite", preco: 10 },
     { nome: "Goiabada", preco: 10 }
 ];
+
 
 const complementosPizza = [
     { nome: "Azeite Trufado", preco: 8 },
@@ -182,28 +217,63 @@ const complementosPizza = [
 
 
 // =====================================================
-// ESTOQUE / DISPONIBILIDADE
+// ESTOQUE
 // =====================================================
 
-let indisponiveisPDV = JSON.parse(
-    localStorage.getItem("indisponiveisPDV") || "[]"
-);
+let indisponiveisPDV = [];
+
+try {
+
+    indisponiveisPDV =
+        JSON.parse(
+            localStorage.getItem("indisponiveisPDV") || "[]"
+        );
+
+    if (!Array.isArray(indisponiveisPDV)) {
+        indisponiveisPDV = [];
+    }
+
+} catch (erro) {
+
+    indisponiveisPDV = [];
+}
 
 
-// Verifica se está disponível
+// =====================================================
+// VERIFICAR DISPONIBILIDADE
+// =====================================================
+
 function produtoDisponivelPDV(nome) {
 
     return !indisponiveisPDV.includes(nome);
 }
 
 
-// Salva disponibilidade
+// =====================================================
+// SALVAR ESTOQUE
+// =====================================================
+
 function salvarEstoquePDV() {
 
     localStorage.setItem(
         "indisponiveisPDV",
         JSON.stringify(indisponiveisPDV)
     );
+}
+
+
+// =====================================================
+// ESCAPAR TEXTO PARA HTML
+// =====================================================
+
+function escaparHTML(texto) {
+
+    return String(texto)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 
@@ -215,6 +285,7 @@ function alternarDisponibilidadePDV(nome) {
 
     const posicao =
         indisponiveisPDV.indexOf(nome);
+
 
     if (posicao >= 0) {
 
@@ -229,17 +300,22 @@ function alternarDisponibilidadePDV(nome) {
 
         indisponiveisPDV.push(nome);
 
-        // Se estiver no pedido, remove
+
+        // Remove do pedido se estiver nele
+
         pedidoPDV =
             pedidoPDV.filter(
-                item => item.nome !== nome
+                item =>
+                    item.nome !== nome
             );
+
 
         alert(
             "🔴 Produto marcado como esgotado:\n\n" +
             nome
         );
     }
+
 
     salvarEstoquePDV();
 
@@ -255,7 +331,7 @@ function alternarDisponibilidadePDV(nome) {
 
 function dinheiroPDV(valor) {
 
-    return Number(valor).toLocaleString(
+    return Number(valor || 0).toLocaleString(
         "pt-BR",
         {
             style: "currency",
@@ -276,34 +352,45 @@ function mostrarProdutosPDV() {
             "resultadoProdutosPDV"
         );
 
+
     if (!container) return;
+
 
     const buscaElemento =
         document.getElementById(
             "buscaPDV"
         );
 
+
     const busca =
         buscaElemento
-            ? buscaElemento.value.toLowerCase().trim()
+            ? buscaElemento.value
+                .toLowerCase()
+                .trim()
             : "";
+
 
     container.innerHTML = "";
 
+
     const produtos =
-        produtosPDV.filter(produto => {
+        produtosPDV.filter(
+            produto => {
 
-            const categoriaOK =
-                categoriaSelecionada === "Todos" ||
-                produto.categoria === categoriaSelecionada;
+                const categoriaOK =
+                    categoriaSelecionada === "Todos" ||
+                    produto.categoria === categoriaSelecionada;
 
-            const buscaOK =
-                produto.nome
-                    .toLowerCase()
-                    .includes(busca);
 
-            return categoriaOK && buscaOK;
-        });
+                const buscaOK =
+                    produto.nome
+                        .toLowerCase()
+                        .includes(busca);
+
+
+                return categoriaOK && buscaOK;
+            }
+        );
 
 
     // =================================================
@@ -311,13 +398,21 @@ function mostrarProdutosPDV() {
     // =================================================
 
     if (
-        (categoriaSelecionada === "Todos" ||
-         categoriaSelecionada === "Pizza") &&
-        ("pizza".includes(busca) || busca === "")
+        (
+            categoriaSelecionada === "Todos" ||
+            categoriaSelecionada === "Pizza"
+        ) &&
+        (
+            busca === "" ||
+            "pizza".includes(busca)
+        )
     ) {
 
         const pizzaDisponivel =
-            produtoDisponivelPDV("Pizza");
+            produtoDisponivelPDV(
+                "Pizza"
+            );
+
 
         container.innerHTML += `
 
@@ -332,12 +427,14 @@ function mostrarProdutosPDV() {
 
                 ${
                     pizzaDisponivel
+
                     ? `
                         <button
                             onclick="abrirMontagemPizza()">
                             🍕 MONTAR PIZZA
                         </button>
                     `
+
                     : `
                         <strong>
                             🔴 ESGOTADO
@@ -352,8 +449,8 @@ function mostrarProdutosPDV() {
 
                     ${
                         pizzaDisponivel
-                        ? "🔴 Marcar esgotado"
-                        : "🟢 Disponível novamente"
+                            ? "🔴 Marcar esgotado"
+                            : "🟢 Disponível novamente"
                     }
 
                 </button>
@@ -364,64 +461,80 @@ function mostrarProdutosPDV() {
 
 
     // =================================================
-    // PRODUTOS
+    // PRODUTOS NORMAIS
     // =================================================
 
-    produtos.forEach(produto => {
+    produtos.forEach(
+        produto => {
 
-        const indice =
-            produtosPDV.indexOf(produto);
+            const indice =
+                produtosPDV.indexOf(
+                    produto
+                );
 
-        const disponivel =
-            produtoDisponivelPDV(
-                produto.nome
-            );
 
-        container.innerHTML += `
+            const disponivel =
+                produtoDisponivelPDV(
+                    produto.nome
+                );
 
-            <div class="produtoPDV">
 
-                <h3>
-                    ${produto.nome}
-                </h3>
+            const nomeSeguro =
+                escaparHTML(
+                    produto.nome
+                );
 
-                <p>
-                    ${dinheiroPDV(produto.preco)}
-                </p>
 
-                ${
-                    disponivel
-                    ? `
-                        <button
-                            onclick="adicionarProdutoPDV(${indice})">
+            container.innerHTML += `
 
-                            ➕ Adicionar
+                <div class="produtoPDV">
 
-                        </button>
-                    `
-                    : `
-                        <strong>
-                            🔴 ESGOTADO
-                        </strong>
-                    `
-                }
+                    <h3>
+                        ${nomeSeguro}
+                    </h3>
 
-                <br><br>
-
-                <button
-                    onclick="alternarDisponibilidadePDV('${produto.nome.replace(/'/g, "\\'")}')">
+                    <p>
+                        ${dinheiroPDV(
+                            produto.preco
+                        )}
+                    </p>
 
                     ${
                         disponivel
-                        ? "🔴 Marcar esgotado"
-                        : "🟢 Disponível novamente"
+
+                        ? `
+                            <button
+                                onclick="adicionarProdutoPDV(${indice})">
+
+                                ➕ Adicionar
+
+                            </button>
+                        `
+
+                        : `
+                            <strong>
+                                🔴 ESGOTADO
+                            </strong>
+                        `
                     }
 
-                </button>
+                    <br><br>
 
-            </div>
-        `;
-    });
+                    <button
+                        onclick="alternarDisponibilidadePDV(${JSON.stringify(produto.nome)})">
+
+                        ${
+                            disponivel
+                                ? "🔴 Marcar esgotado"
+                                : "🟢 Disponível novamente"
+                        }
+
+                    </button>
+
+                </div>
+            `;
+        }
+    );
 
 
     if (
@@ -430,9 +543,11 @@ function mostrarProdutosPDV() {
     ) {
 
         container.innerHTML += `
+
             <p>
                 Nenhum produto encontrado.
             </p>
+
         `;
     }
 }
@@ -445,7 +560,8 @@ function mostrarProdutosPDV() {
 function filtrarPDV(categoria) {
 
     categoriaSelecionada =
-        categoria;
+        categoria || "Todos";
+
 
     mostrarProdutosPDV();
 }
@@ -459,6 +575,7 @@ function adicionarProdutoPDV(indice) {
 
     const produto =
         produtosPDV[indice];
+
 
     if (!produto) return;
 
@@ -507,6 +624,7 @@ function adicionarProdutoPDV(indice) {
         });
     }
 
+
     atualizarPedidoPDV();
 }
 
@@ -517,12 +635,17 @@ function adicionarProdutoPDV(indice) {
 
 function aumentarProdutoPDV(indice) {
 
-    if (!pedidoPDV[indice]) return;
+    const item =
+        pedidoPDV[indice];
+
+
+    if (!item) return;
+
 
     if (
-        !pedidoPDV[indice].personalizado &&
+        !item.personalizado &&
         !produtoDisponivelPDV(
-            pedidoPDV[indice].nome
+            item.nome
         )
     ) {
 
@@ -533,7 +656,9 @@ function aumentarProdutoPDV(indice) {
         return;
     }
 
-    pedidoPDV[indice].quantidade++;
+
+    item.quantidade++;
+
 
     atualizarPedidoPDV();
 }
@@ -547,14 +672,20 @@ function diminuirProdutoPDV(indice) {
 
     if (!pedidoPDV[indice]) return;
 
+
     pedidoPDV[indice].quantidade--;
+
 
     if (
         pedidoPDV[indice].quantidade <= 0
     ) {
 
-        pedidoPDV.splice(indice, 1);
+        pedidoPDV.splice(
+            indice,
+            1
+        );
     }
+
 
     atualizarPedidoPDV();
 }
@@ -568,9 +699,32 @@ function removerProdutoPDV(indice) {
 
     if (!pedidoPDV[indice]) return;
 
-    pedidoPDV.splice(indice, 1);
+
+    pedidoPDV.splice(
+        indice,
+        1
+    );
+
 
     atualizarPedidoPDV();
+}
+
+
+// =====================================================
+// CALCULAR TOTAL
+// =====================================================
+
+function obterTotalPDV() {
+
+    return pedidoPDV.reduce(
+        (soma, item) =>
+            soma +
+            (
+                Number(item.preco) *
+                Number(item.quantidade)
+            ),
+        0
+    );
 }
 
 
@@ -585,14 +739,18 @@ function atualizarPedidoPDV() {
             "pedidoPDV"
         );
 
+
     const totalElemento =
         document.getElementById(
             "totalPDV"
         );
 
+
     if (!container) return;
 
+
     container.innerHTML = "";
+
 
     let total = 0;
 
@@ -601,13 +759,15 @@ function atualizarPedidoPDV() {
         (item, indice) => {
 
             const subtotal =
-                item.preco *
-                item.quantidade;
+                Number(item.preco) *
+                Number(item.quantidade);
+
 
             total += subtotal;
 
 
             let detalhes = "";
+
 
             if (
                 item.personalizado &&
@@ -615,9 +775,11 @@ function atualizarPedidoPDV() {
             ) {
 
                 detalhes = `
+
                     <small>
                         ${item.detalhes}
                     </small>
+
                 `;
             }
 
@@ -627,7 +789,7 @@ function atualizarPedidoPDV() {
                 <div class="itemPedidoPDV">
 
                     <strong>
-                        ${item.nome}
+                        ${escaparHTML(item.nome)}
                     </strong>
 
                     ${detalhes}
@@ -656,6 +818,7 @@ function atualizarPedidoPDV() {
                     </button>
 
                 </div>
+
             `;
         }
     );
@@ -664,9 +827,11 @@ function atualizarPedidoPDV() {
     if (pedidoPDV.length === 0) {
 
         container.innerHTML = `
+
             <p>
                 🛒 Nenhum produto no pedido.
             </p>
+
         `;
     }
 
@@ -683,12 +848,27 @@ function atualizarPedidoPDV() {
 
 
 // =====================================================
-// LIMPAR
+// LIMPAR PEDIDO
 // =====================================================
 
 function limparPDV() {
 
+    if (pedidoPDV.length === 0) {
+        return;
+    }
+
+
+    const confirmar =
+        confirm(
+            "Deseja realmente limpar o pedido?"
+        );
+
+
+    if (!confirmar) return;
+
+
     pedidoPDV = [];
+
 
     atualizarPedidoPDV();
 }
@@ -712,8 +892,13 @@ function abrirMontagemPizza() {
     }
 
 
+    // =================================================
+    // TAMANHO
+    // =================================================
+
     let textoTamanhos =
         "🍕 ESCOLHA O TAMANHO\n\n";
+
 
     tamanhosPizza.forEach(
         (tamanho, indice) => {
@@ -728,7 +913,10 @@ function abrirMontagemPizza() {
 
 
     const tamanhoEscolhido =
-        prompt(textoTamanhos);
+        prompt(
+            textoTamanhos
+        );
+
 
     if (!tamanhoEscolhido) return;
 
@@ -749,8 +937,13 @@ function abrirMontagemPizza() {
     }
 
 
+    // =================================================
+    // SABORES
+    // =================================================
+
     let textoSabores =
         "🍕 ESCOLHA OS SABORES\n\n";
+
 
     saboresPizza.forEach(
         (sabor, indice) => {
@@ -761,16 +954,21 @@ function abrirMontagemPizza() {
                     sabor.nome
                 );
 
+
             textoSabores +=
                 `${indice + 1} - ` +
                 `${sabor.nome} - ` +
-                `${dinheiroPDV(sabor.preco)}`;
+                `${dinheiroPDV(
+                    sabor.preco
+                )}`;
+
 
             if (!disponivel) {
 
                 textoSabores +=
                     " 🔴 ESGOTADO";
             }
+
 
             textoSabores += "\n";
         }
@@ -791,6 +989,7 @@ function abrirMontagemPizza() {
                 textoSabores +
                 `\nEscolha o sabor ${i + 1} de ${tamanho.sabores}:`
             );
+
 
         if (!numero) return;
 
@@ -836,10 +1035,16 @@ function abrirMontagemPizza() {
     }
 
 
+    if (saboresEscolhidos.length === 0) {
+        return;
+    }
+
+
     let precoPizza =
         Math.max(
             ...saboresEscolhidos.map(
-                sabor => sabor.preco
+                sabor =>
+                    sabor.preco
             )
         );
 
@@ -851,6 +1056,7 @@ function abrirMontagemPizza() {
     let textoBordas =
         "🧀 ESCOLHA A BORDA\n\n";
 
+
     bordasPizza.forEach(
         (borda, indice) => {
 
@@ -860,15 +1066,20 @@ function abrirMontagemPizza() {
                     borda.nome
                 );
 
+
             textoBordas +=
                 `${indice + 1} - ` +
                 `${borda.nome}`;
 
+
             if (borda.preco > 0) {
 
                 textoBordas +=
-                    ` (+${dinheiroPDV(borda.preco)})`;
+                    ` (+${dinheiroPDV(
+                        borda.preco
+                    )})`;
             }
+
 
             if (!disponivel) {
 
@@ -876,13 +1087,17 @@ function abrirMontagemPizza() {
                     " 🔴 ESGOTADO";
             }
 
+
             textoBordas += "\n";
         }
     );
 
 
     const bordaEscolhida =
-        prompt(textoBordas);
+        prompt(
+            textoBordas
+        );
+
 
     if (!bordaEscolhida) return;
 
@@ -929,8 +1144,10 @@ function abrirMontagemPizza() {
     let textoComplementos =
         "➕ ADICIONAIS\n\n";
 
+
     textoComplementos +=
         "Digite os números separados por vírgula.\n";
+
 
     textoComplementos +=
         "Digite 0 para nenhum adicional.\n\n";
@@ -945,10 +1162,14 @@ function abrirMontagemPizza() {
                     item.nome
                 );
 
+
             textoComplementos +=
                 `${indice + 1} - ` +
                 `${item.nome} ` +
-                `(+${dinheiroPDV(item.preco)})`;
+                `(+${dinheiroPDV(
+                    item.preco
+                )})`;
+
 
             if (!disponivel) {
 
@@ -956,13 +1177,16 @@ function abrirMontagemPizza() {
                     " 🔴 ESGOTADO";
             }
 
+
             textoComplementos += "\n";
         }
     );
 
 
     const complementosEscolhidos =
-        prompt(textoComplementos);
+        prompt(
+            textoComplementos
+        );
 
 
     const adicionais = [];
@@ -992,7 +1216,10 @@ function abrirMontagemPizza() {
                         numero - 1
                     ];
 
-                if (!adicional) return;
+
+                if (!adicional) {
+                    return;
+                }
 
 
                 if (
@@ -1002,6 +1229,12 @@ function abrirMontagemPizza() {
                     )
                 ) {
 
+                    alert(
+                        "🔴 O adicional " +
+                        adicional.nome +
+                        " está esgotado e foi ignorado."
+                    );
+
                     return;
                 }
 
@@ -1009,6 +1242,7 @@ function abrirMontagemPizza() {
                 adicionais.push(
                     adicional
                 );
+
 
                 precoPizza +=
                     adicional.preco;
@@ -1032,17 +1266,19 @@ function abrirMontagemPizza() {
 
     const nomesAdicionais =
         adicionais.length > 0
+
         ? adicionais
             .map(
                 item =>
                     item.nome
             )
             .join(", ")
+
         : "Nenhum";
 
 
     // =================================================
-    // ADICIONAR
+    // ADICIONAR PIZZA
     // =================================================
 
     pedidoPDV.push({
@@ -1060,9 +1296,9 @@ function abrirMontagemPizza() {
             true,
 
         detalhes:
-            `Sabores: ${nomesSabores}<br>` +
-            `Borda: ${borda.nome}<br>` +
-            `Adicionais: ${nomesAdicionais}`
+            `Sabores: ${escaparHTML(nomesSabores)}<br>` +
+            `Borda: ${escaparHTML(borda.nome)}<br>` +
+            `Adicionais: ${escaparHTML(nomesAdicionais)}`
     });
 
 
@@ -1074,7 +1310,9 @@ function abrirMontagemPizza() {
         `Tamanho: ${tamanho.nome}\n` +
         `Sabores: ${nomesSabores}\n` +
         `Borda: ${borda.nome}\n` +
-        `Total: ${dinheiroPDV(precoPizza)}`
+        `Total: ${dinheiroPDV(
+            precoPizza
+        )}`
     );
 }
 
@@ -1098,13 +1336,7 @@ function finalizarPDV() {
 
 
     const total =
-        pedidoPDV.reduce(
-            (soma, item) =>
-                soma +
-                item.preco *
-                item.quantidade,
-            0
-        );
+        obterTotalPDV();
 
 
     alert(
@@ -1121,15 +1353,11 @@ function finalizarPDV() {
 
 function calcularTrocoPDV() {
 
-    const totalElemento =
-        document.getElementById(
-            "totalPDV"
-        );
-
     const valorPagoElemento =
         document.getElementById(
             "valorPagoPDV"
         );
+
 
     const trocoElemento =
         document.getElementById(
@@ -1138,7 +1366,6 @@ function calcularTrocoPDV() {
 
 
     if (
-        !totalElemento ||
         !valorPagoElemento ||
         !trocoElemento
     ) {
@@ -1147,13 +1374,7 @@ function calcularTrocoPDV() {
 
 
     const total =
-        pedidoPDV.reduce(
-            (soma, item) =>
-                soma +
-                item.preco *
-                item.quantidade,
-            0
-        );
+        obterTotalPDV();
 
 
     const valorPago =
@@ -1162,13 +1383,47 @@ function calcularTrocoPDV() {
         ) || 0;
 
 
+    const pagamentoElemento =
+        document.getElementById(
+            "pagamentoPDV"
+        );
+
+
+    const pagamento =
+        pagamentoElemento
+            ? pagamentoElemento.value
+            : "";
+
+
+    if (
+        !pagamento
+            .toLowerCase()
+            .includes("dinheiro")
+    ) {
+
+        trocoElemento.textContent =
+            dinheiroPDV(0);
+
+        return;
+    }
+
+
     const troco =
         valorPago - total;
 
 
+    if (valorPago === 0) {
+
+        trocoElemento.textContent =
+            dinheiroPDV(0);
+
+        return;
+    }
+
+
     if (troco < 0) {
 
-        trocoElemento.value =
+        trocoElemento.textContent =
             "Falta " +
             dinheiroPDV(
                 Math.abs(troco)
@@ -1176,7 +1431,7 @@ function calcularTrocoPDV() {
 
     } else {
 
-        trocoElemento.value =
+        trocoElemento.textContent =
             dinheiroPDV(troco);
     }
 }
@@ -1206,7 +1461,7 @@ function finalizarVendaPDV() {
                 "clientePDV"
             )
             ?.value
-            .trim();
+            .trim() || "";
 
 
     const telefone =
@@ -1215,7 +1470,7 @@ function finalizarVendaPDV() {
                 "telefonePDV"
             )
             ?.value
-            .trim();
+            .trim() || "";
 
 
     const tipoPedido =
@@ -1223,7 +1478,7 @@ function finalizarVendaPDV() {
             .getElementById(
                 "tipoPedidoPDV"
             )
-            ?.value;
+            ?.value || "";
 
 
     const endereco =
@@ -1232,7 +1487,7 @@ function finalizarVendaPDV() {
                 "enderecoPDV"
             )
             ?.value
-            .trim();
+            .trim() || "";
 
 
     const pagamento =
@@ -1240,23 +1495,41 @@ function finalizarVendaPDV() {
             .getElementById(
                 "pagamentoPDV"
             )
-            ?.value;
+            ?.value || "";
+
+
+    const valorPago =
+        Number(
+            document
+                .getElementById(
+                    "valorPagoPDV"
+                )
+                ?.value
+        ) || 0;
 
 
     const total =
-        pedidoPDV.reduce(
-            (soma, item) =>
-                soma +
-                item.preco *
-                item.quantidade,
-            0
-        );
+        obterTotalPDV();
 
+
+    // =================================================
+    // VALIDAÇÕES
+    // =================================================
 
     if (!cliente) {
 
         alert(
             "Informe o nome do cliente."
+        );
+
+        return;
+    }
+
+
+    if (!tipoPedido) {
+
+        alert(
+            "Selecione Retirada ou Entrega."
         );
 
         return;
@@ -1274,7 +1547,7 @@ function finalizarVendaPDV() {
 
 
     if (
-        tipoPedido === "delivery" &&
+        tipoPedido === "Entrega" &&
         !endereco
     ) {
 
@@ -1286,15 +1559,9 @@ function finalizarVendaPDV() {
     }
 
 
-    const valorPago =
-        Number(
-            document
-                .getElementById(
-                    "valorPagoPDV"
-                )
-                ?.value
-        ) || 0;
-
+    // =================================================
+    // TROCO
+    // =================================================
 
     let troco = 0;
 
@@ -1321,6 +1588,10 @@ function finalizarVendaPDV() {
             valorPago - total;
     }
 
+
+    // =================================================
+    // RESUMO
+    // =================================================
 
     let resumo =
         "🧾 VENDA FINALIZADA\n\n";
@@ -1371,6 +1642,7 @@ function finalizarVendaPDV() {
                     item.quantidade
                 )}\n`;
 
+
             if (
                 item.personalizado &&
                 item.detalhes
@@ -1410,6 +1682,7 @@ function finalizarVendaPDV() {
                 valorPago
             );
 
+
         resumo +=
             "\nTroco: " +
             dinheiroPDV(
@@ -1418,19 +1691,47 @@ function finalizarVendaPDV() {
     }
 
 
-    alert(resumo);
+    // =================================================
+    // CONFIRMAÇÃO
+    // =================================================
+
+    const confirmar =
+        confirm(
+            resumo +
+            "\n\nConfirmar venda?"
+        );
+
+
+    if (!confirmar) {
+        return;
+    }
 
 
     // =================================================
     // HISTÓRICO
     // =================================================
 
-    const vendas =
-        JSON.parse(
-            localStorage.getItem(
-                "vendasPDV"
-            ) || "[]"
-        );
+    let vendas = [];
+
+
+    try {
+
+        vendas =
+            JSON.parse(
+                localStorage.getItem(
+                    "vendasPDV"
+                ) || "[]"
+            );
+
+
+        if (!Array.isArray(vendas)) {
+            vendas = [];
+        }
+
+    } catch (erro) {
+
+        vendas = [];
+    }
 
 
     vendas.push({
@@ -1454,6 +1755,10 @@ function finalizarVendaPDV() {
 
         pagamento,
 
+        valorPago,
+
+        troco,
+
         total,
 
         itens:
@@ -1473,10 +1778,19 @@ function finalizarVendaPDV() {
     );
 
 
+    // =================================================
+    // LIMPAR PEDIDO
+    // =================================================
+
     pedidoPDV = [];
+
 
     atualizarPedidoPDV();
 
+
+    // =================================================
+    // LIMPAR CAMPOS
+    // =================================================
 
     [
         "clientePDV",
@@ -1491,11 +1805,34 @@ function finalizarVendaPDV() {
                     id
                 );
 
+
             if (campo) {
                 campo.value = "";
             }
         }
     );
+
+
+    const tipoElemento =
+        document.getElementById(
+            "tipoPedidoPDV"
+        );
+
+
+    if (tipoElemento) {
+        tipoElemento.value = "";
+    }
+
+
+    const pagamentoElemento =
+        document.getElementById(
+            "pagamentoPDV"
+        );
+
+
+    if (pagamentoElemento) {
+        pagamentoElemento.value = "";
+    }
 
 
     const trocoElemento =
@@ -1505,7 +1842,9 @@ function finalizarVendaPDV() {
 
 
     if (trocoElemento) {
-        trocoElemento.value = "";
+
+        trocoElemento.textContent =
+            dinheiroPDV(0);
     }
 
 
@@ -1571,5 +1910,7 @@ document.addEventListener(
         mostrarProdutosPDV();
 
         atualizarPedidoPDV();
+
+        calcularTrocoPDV();
     }
 );
