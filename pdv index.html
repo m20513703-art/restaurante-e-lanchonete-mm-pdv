@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>PDV Administrativo - Restaurante Lanchonete MM</title>
+
+    <link rel="stylesheet" href="pdv.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         TELA DE LOGIN
+         ===================================================== -->
+
+    <div id="telaLogin" class="tela-login">
+
+        <div class="login-box">
+
+            <div class="login-logo">
+                🍔
+            </div>
+
+            <h1>Restaurante Lanchonete MM</h1>
+
+            <h2>PDV Administrativo</h2>
+
+            <p>
+                Área exclusiva para administração
+                do restaurante.
+            </p>
+
+            <form id="formLogin" onsubmit="entrarPDV(event)">
+
+                <label for="senhaPDV">
+                    Senha do PDV
+                </label>
+
+                <input
+                    type="password"
+                    id="senhaPDV"
+                    placeholder="Digite a senha"
+                    autocomplete="off"
+                    required
+                >
+
+                <button type="submit" class="btn-entrar">
+                    🔐 ENTRAR
+                </button>
+
+            </form>
+
+            <div id="mensagemLogin" class="mensagem-login"></div>
+
+            <button
+                type="button"
+                class="btn-voltar-login"
+                onclick="voltarParaSite()">
+
+                ← Voltar para o site
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SISTEMA PDV
+         ===================================================== -->
+
+    <div id="sistemaPDV" class="sistema-pdv">
+
+        <!-- CABEÇALHO -->
+
+        <header class="cabecalho-pdv">
+
+            <div>
+
+                <span class="logo-pdv">
+                    🍔
+                </span>
+
+                <div class="titulo-pdv">
+
+                    <h1>
+                        Restaurante Lanchonete MM
+                    </h1>
+
+                    <span>
+                        PDV Administrativo
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="acoes-topo">
+
+                <button
+                    type="button"
+                    onclick="voltarParaSite()"
+                    class="btn-site">
+
+                    🌐 Site
+
+                </button>
+
+                <button
+                    type="button"
+                    onclick="sairPDV()"
+                    class="btn-sair">
+
+                    🚪 Sair
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             CONTEÚDO
+             ================================================= -->
+
+        <main class="conteudo-pdv">
+
+            <!-- RESUMO -->
+
+            <section class="resumo-pdv">
+
+                <div class="resumo-card">
+
+                    <span class="resumo-icone">
+                        📦
+                    </span>
+
+                    <div>
+
+                        <strong id="totalProdutos">
+                            0
+                        </strong>
+
+                        <span>
+                            Produtos cadastrados
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="resumo-card">
+
+                    <span class="resumo-icone">
+                        🟢
+                    </span>
+
+                    <div>
+
+                        <strong id="produtosDisponiveis">
+                            0
+                        </strong>
+
+                        <span>
+                            Disponíveis
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="resumo-card">
+
+                    <span class="resumo-icone">
+                        🔴
+                    </span>
+
+                    <div>
+
+                        <strong id="produtosIndisponiveis">
+                            0
+                        </strong>
+
+                        <span>
+                            Indisponíveis
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 CONTROLES
+                 ================================================= -->
+
+            <section class="painel-controle">
+
+                <div class="titulo-secao">
+
+                    <div>
+
+                        <h2>
+                            📋 Produtos do restaurante
+                        </h2>
+
+                        <p>
+                            Cadastre e controle os produtos
+                            exibidos no site.
+                        </p>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-principal"
+                        onclick="abrirCadastro()">
+
+                        ➕ Novo produto
+
+                    </button>
+
+                </div>
+
+
+                <div class="filtros">
+
+                    <div class="campo-busca">
+
+                        <label for="buscaProdutos">
+                            🔎 Buscar produto
+                        </label>
+
+                        <input
+                            type="search"
+                            id="buscaProdutos"
+                            placeholder="Digite o nome do produto..."
+                            oninput="listarProdutos()"
+                        >
+
+                    </div>
+
+
+                    <div class="campo-filtro">
+
+                        <label for="filtroCategoria">
+                            Categoria
+                        </label>
+
+                        <select
+                            id="filtroCategoria"
+                            onchange="listarProdutos()">
+
+                            <option value="">
+                                Todas as categorias
+                            </option>
+
+                            <option value="Almoço">
+                                Almoço
+                            </option>
+
+                            <option value="Marmitas">
+                                Marmitas
+                            </option>
+
+                            <option value="Pizzas">
+                                Pizzas
+                            </option>
+
+                            <option value="Lanches">
+                                Lanches
+                            </option>
+
+                            <option value="Hot Dogs">
+                                Hot Dogs
+                            </option>
+
+                            <option value="Esfirras">
+                                Esfirras
+                            </option>
+
+                            <option value="Porções">
+                                Porções
+                            </option>
+
+                            <option value="À La Carte">
+                                À La Carte
+                            </option>
+
+                            <option value="Parmegianas">
+                                Parmegianas
+                            </option>
+
+                            <option value="Bebidas">
+                                Bebidas
+                            </option>
+
+                            <option value="Outros">
+                                Outros
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="campo-filtro">
+
+                        <label for="filtroDisponibilidade">
+                            Disponibilidade
+                        </label>
+
+                        <select
+                            id="filtroDisponibilidade"
+                            onchange="listarProdutos()">
+
+                            <option value="">
+                                Todos
+                            </option>
+
+                            <option value="disponivel">
+                                Disponíveis
+                            </option>
+
+                            <option value="indisponivel">
+                                Indisponíveis
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 LISTA DE PRODUTOS
+                 ================================================= -->
+
+            <section class="lista-secao">
+
+                <div
+                    id="listaProdutos"
+                    class="lista-produtos-pdv">
+
+                </div>
+
+            </section>
+
+        </main>
+
+
+        <!-- =================================================
+             MODAL CADASTRO / EDIÇÃO
+             ================================================= -->
+
+        <div
+            id="modalProduto"
+            class="modal">
+
+            <div class="modal-conteudo">
+
+                <div class="modal-cabecalho">
+
+                    <div>
+
+                        <h2 id="tituloModal">
+                            ➕ Novo produto
+                        </h2>
+
+                        <p>
+                            As alterações serão refletidas
+                            no catálogo do site.
+                        </p>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn-fechar"
+                        onclick="fecharCadastro()">
+
+                        ×
+
+                    </button>
+
+                </div>
+
+
+                <form
+                    id="formProduto"
+                    onsubmit="salvarProduto(event)">
+
+                    <input
+                        type="hidden"
+                        id="produtoId"
+                    >
+
+
+                    <div class="campo-form">
+
+                        <label for="nomeProduto">
+                            Nome do produto *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nomeProduto"
+                            placeholder="Ex.: X-Bacon Especial"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="linha-form">
+
+                        <div class="campo-form">
+
+                            <label for="categoriaProduto">
+                                Categoria *
+                            </label>
+
+                            <select
+                                id="categoriaProduto"
+                                required>
+
+                                <option value="">
+                                    Selecione
+                                </option>
+
+                                <option value="Almoço">
+                                    Almoço
+                                </option>
+
+                                <option value="Marmitas">
+                                    Marmitas
+                                </option>
+
+                                <option value="Pizzas">
+                                    Pizzas
+                                </option>
+
+                                <option value="Lanches">
+                                    Lanches
+                                </option>
+
+                                <option value="Hot Dogs">
+                                    Hot Dogs
+                                </option>
+
+                                <option value="Esfirras">
+                                    Esfirras
+                                </option>
+
+                                <option value="Porções">
+                                    Porções
+                                </option>
+
+                                <option value="À La Carte">
+                                    À La Carte
+                                </option>
+
+                                <option value="Parmegianas">
+                                    Parmegianas
+                                </option>
+
+                                <option value="Bebidas">
+                                    Bebidas
+                                </option>
+
+                                <option value="Outros">
+                                    Outros
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="campo-form">
+
+                            <label for="precoProduto">
+                                Preço *
+                            </label>
+
+                            <input
+                                type="number"
+                                id="precoProduto"
+                                min="0"
+                                step="0.01"
+                                placeholder="0,00"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="campo-form">
+
+                        <label for="descricaoProduto">
+                            Descrição / ingredientes
+                        </label>
+
+                        <textarea
+                            id="descricaoProduto"
+                            rows="4"
+                            placeholder="Informe os ingredientes ou detalhes do produto..."></textarea>
+
+                    </div>
+
+
+                    <div class="campo-form">
+
+                        <label for="imagemProduto">
+                            Imagem do produto
+                        </label>
+
+                        <input
+                            type="text"
+                            id="imagemProduto"
+                            placeholder="Cole o endereço da imagem (opcional)"
+                        >
+
+                        <small>
+                            Opcional. Pode deixar em branco.
+                        </small>
+
+                    </div>
+
+
+                    <div class="campo-disponibilidade">
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                id="disponibilidadeProduto"
+                                checked
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                        <div>
+
+                            <strong>
+                                Produto disponível
+                            </strong>
+
+                            <small>
+                                Quando desativado, o produto
+                                não poderá ser comprado no site.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="modal-acoes">
+
+                        <button
+                            type="button"
+                            class="btn-cancelar"
+                            onclick="fecharCadastro()">
+
+                            Cancelar
+
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="btn-salvar">
+
+                            💾 Salvar produto
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             NOTIFICAÇÃO
+             ================================================= -->
+
+        <div
+            id="notificacaoPDV"
+            class="notificacao-pdv">
+
+        </div>
+
+    </div>
+
+
+    <script src="pdv.js"></script>
+
+</body>
+
+</html>
